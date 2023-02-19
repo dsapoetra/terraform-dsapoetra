@@ -7,8 +7,13 @@ terraform {
   }
 }
 
+variable "sa" {
+  type = string
+  default = ""
+}
+
 provider "google" {
-  credentials = file("sa.json")
+  credentials = var.sa
 
   project = "dsapoetra"
   region  = "us-central1"
