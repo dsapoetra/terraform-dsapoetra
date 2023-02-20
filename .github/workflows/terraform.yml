@@ -23,7 +23,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
 
       - name: Terraform Checking
-      - id: check
+        id: check
         run: echo GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
           
       - name: Terraform Init
