@@ -7,13 +7,13 @@ terraform {
   }
 }
 
-variable "sa" {
+variable "GOOGLE_APPLICATION_CREDENTIALS" {
   type = string
   default = ""
 }
 
 provider "google" {
-  credentials = var.sa
+  credentials = var.GOOGLE_APPLICATION_CREDENTIALS
 
   project = "dsapoetra"
   region  = "us-central1"
