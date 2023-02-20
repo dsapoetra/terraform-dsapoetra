@@ -12,15 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        with:
-          # terraform_version: 0.13.0:
-          cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
+        # with:
+        #   # terraform_version: 0.13.0:
+        #   cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
 
       - name: Terraform Checking
         id: check
@@ -29,6 +30,8 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       
       - name: Terraform Validate
         id: validate
@@ -39,6 +42,8 @@ jobs:
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
         continue-on-error: true
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Update Pull Request
         uses: actions/github-script@v6
@@ -77,3 +82,5 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
